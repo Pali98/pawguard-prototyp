@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PawGuard Prototyp</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+<div id="tutorial-overlay" class="tutorial-overlay">
+    <div class="tutorial-card">
+        <button class="close-tutorial" onclick="closeTutorial()" aria-label="Tutorial schließen">✕</button>
+
+        <div class="tutorial-step active" id="t-step1">
+            <div class="t-icon">ℹ</div>
+            <h3>Funktionsweise</h3>
+            <p>Das smarte Halsband ist mit GPS und Bewegungssensoren ausgestattet. Die Bewegungen deiner Katze werden so getracked und analysiert.</p>
+            <button class="primary-btn" onclick="nextTutorial(2)">Weiter</button>
+        </div>
+
+        <div class="tutorial-step" id="t-step2">
+            <div class="t-icon">🐾</div>
+            <h3>Mögliches Jagdverhalten</h3>
+            <p>Wird Jagdverhalten erkannt, werden Licht- und Tonsignale ausgegeben, um so das Beutetier zu warnen.</p>
+            <p>So trägst du mit dem PawGuard-Halsband zum Schutz der Wildtiere in deiner Umgebung bei 😊</p>
+            <button class="primary-btn" onclick="nextTutorial(3)">Verstanden</button>
+        </div>
+
+        <div class="tutorial-step active" id="t-step3">
+            <div class="t-icon">📍</div>
+            <h3>Standort und Bewegung</h3>
+            <p>Sieh nach, wo deine Katze heute unterwegs war, wie aktiv sie war und lerne, wo sie sich häufiger aufhält.</p>
+            <button class="primary-btn" onclick="nextTutorial(4)">Weiter</button>
+        </div>
+
+        <div class="tutorial-step" id="t-step4">
+            <div class="t-icon">📊</div>
+            <h3>Aktivitätsanalyse</h3>
+            <p>Die App versteht verschiedene Aktivitätsmuster und macht dich frühzeitig auf Veränderungen aufmerksam.</p>
+            <button class="primary-btn" onclick="closeTutorial()">Alles klar!</button>
+        </div>
+    </div>
+</div>
+
+<div id="app">
+    <header class="app-header" id="app-header">
+        <div class="header-copy">
+
+            <div class="header-main-row">
+                <h1 id="header-title">Das war Minkas Tag bisher 😊</h1>
+                <button
+                        class="profile-pic profile-button"
+                        onclick="openProfile()"
+                        aria-label="Zum Katzenprofil">
+                </button>
+            </div>
+
+            <p class="header-subtitle subtle" id="header-subtitle">
+                Orte, Ruhephasen und auffällige Momente auf einen Blick.
+            </p>
+        </div>
+    </header>
+
+    <main>
+        <section id="screen-overview" class="screen active" data-index="0">
+            <div class="card discovery-banner" onclick="openTutorial()">
+                <div class="discovery-icon">✨</div>
+                <div class="discovery-content">
+                    <div class="discovery-tag">TUTORIAL</div>
+                    <h4>Wie funktioniert das Halsband eigentlich?</h4>
+                    <p>Entdecke die Funktionen im Schnell-Guide.</p>
+                </div>
+                <div class="discovery-arrow">➔</div>
+            </div>
+
+            <div class="card route-card">
+                <div class="card-head">
+                    <div>
+                        <h4>Orte des Tages</h4>
+                        <p class="subtle">Letzte Aktivität vor 12 Minuten</p>
+                    </div>
+                    <span class="mini-chip">Live</span>
+                </div>
+
+                <div class="route-meta">
+                    <span class="status-tag active">💤 am Schlafen</span>
+                </div>
+
+                <div class="map-container route-map" onclick="showScreen('screen-activity', document.getElementById('nav-analysis'))">
+                    <div class="map-bg"></div>
+
+
+                    <div class="map-hotspot sleeping hotspot-large" style="top: 30%; left: 20%;"></div>
+                    <div class="map-hotspot sleeping hotspot-medium" style="top: 15%; left: 88%;"></div>
+                    <div class="map-hotspot hunting hotspot-xl" style="top: 74%; left: 22%;"></div>
+                    <div class="map-hotspot hunting hotspot-medium" style="top: 30%; left: 40%;"></div>
+                </div>
+
+                <div class="map-legend">
+                    <span><i class="dot-hunt"></i> Aktives Verhalten</span>
+                    <span><i class="dot-sleep"></i> am Entspannen</span>
+                </div>
+
+                <button class="primary-btn" onclick="showScreen('screen-activity', document.getElementById('nav-analysis'))">
+                        Mehr Details
+                </button>
+            </div>
+
+            <div class="card hero-card">
+                <h3>Heute in Bewegung: 2 h 35 min</h3>
+                <span class="badge warning-badge">Etwas weniger aktiv als üblich</span>
+            </div>
+
+            <div
+                    class="card insight-card"
+                    onclick="showScreen('screen-activity', document.getElementById('nav-analysis'))">
+                <h4>Heutige Highlights</h4>
+                <p>• 6.842 Schritte</p>
+                <p>• 3 mögliche jagdähnliche Phasen</p>
+                <p>• Aktivität 18 % unter dem 7-Tage-Schnitt</p>
+            </div>
+        </section>
+
+        <section id="screen-activity" class="screen" data-index="1">
+            <div class="card behavior-card">
+                <div class="card-head">
+                    <div>
+                        <h4>Verhalten heute</h4>
+                        <p class="subtle">So haben sich Minkas Aktivitäten heute verteilt</p>
+                    </div>
+                </div>
+
+                <div class="behavior-overview">
+                    <div class="behavior-donut" aria-label="Verteilung von Ruhe, Bewegung und möglichem Jagdverhalten">
+                        <div class="behavior-donut-inner">
+                            <strong>13%</strong>
+                            <span>Jagdverhalten</span>
+                        </div>
+                    </div>
+
+                    <div class="behavior-legend">
+                        <div class="behavior-legend-row">
+                            <span class="legend-dot legend-rest"></span>
+                            <span>Ruhe</span>
+                            <strong>58%</strong>
+                        </div>
+                        <div class="behavior-legend-row">
+                            <span class="legend-dot legend-move"></span>
+                            <span>Bewegung</span>
+                            <strong>29%</strong>
+                        </div>
+                        <div class="behavior-legend-row">
+                            <span class="legend-dot legend-hunt"></span>
+                            <span>Mögliches Jagdverhalten</span>
+                            <strong>13%</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="behavior-note">
+                    Die Darstellung ordnet erkannte Bewegungsmuster über den Tag ein.
+                </p>
+            </div>
+
+            <div class="card hunting-card">
+                <div class="card-head">
+                    <div>
+                        <h4>Mögliches Jagdverhalten heute</h4>
+                        <p class="subtle">Heute 3 erkannte Situationen</p>
+                    </div>
+                    <span class="mini-chip warm">Aktiv</span>
+                </div>
+
+                <p class="analysis-note">
+                    Das Halsband hat heute 3 Situationen mit möglichem Jagdverhalten erkannt.
+                    In diesen Momenten wurden Warnsignale aktiviert, um Tiere in der Umgebung
+                    frühzeitig zu warnen.
+                </p>
+
+                <div class="hunting-stats">
+                    <div class="hunting-stat">
+                        <span class="hunting-stat-label">Warnsignale</span>
+                        <strong>3</strong>
+                    </div>
+                    <div class="hunting-stat">
+                        <span class="hunting-stat-label">Auffälligster Bereich</span>
+                        <strong>Hecke</strong>
+                    </div>
+                    <div class="hunting-stat">
+                        <span class="hunting-stat-label">Längste Phase</span>
+                        <strong>11 Min</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card detail-card">
+                <div class="card-head">
+                    <div>
+                        <h4>Erkannte Situationen im Detail</h4>
+                        <p class="subtle">Zeitfenster, Muster und Einschätzung</p>
+                    </div>
+                </div>
+
+                <div class="hunting-events">
+                    <div class="event-row">
+                        <div>
+                            <strong>07:40 - 07:48</strong>
+                            <p>Schnelle Beschleunigungen und kurzes Verharren am Beetrand.</p>
+                        </div>
+                        <span class="event-tag">mittel</span>
+                    </div>
+
+                    <div class="event-row">
+                        <div>
+                            <strong>12:18 - 12:24</strong>
+                            <p>Kurze intensive Aktivitätsphase nahe der Hecke.</p>
+                        </div>
+                        <span class="event-tag">niedrig</span>
+                    </div>
+
+                    <div class="event-row">
+                        <div>
+                            <strong>18:52 - 19:03</strong>
+                            <p>Erhöhte Aktivität mit wiederholten Richtungswechseln.</p>
+                        </div>
+                        <span class="event-tag">mittel</span>
+                    </div>
+                </div>
+
+                <div class="hint-box">
+                    Die Darstellung soll Bewegungsmuster nachvollziehbar machen, nicht Verhalten sicher bewerten.
+                </div>
+            </div>
+
+            <div class="card analysis-summary low-activity">
+                <div class="analysis-topline">Aktivität heute</div>
+                <div class="big-number">6.842 <span>Schritte</span></div>
+                <p class="analysis-note">
+                    Heute war Minka etwas weniger aktiv als an vergleichbaren Tagen.
+                </p>
+            </div>
+
+            <div class="card trend-card">
+                <div class="card-head">
+                    <div>
+                        <h4>Trend der letzten 7 Tage</h4>
+                        <p class="subtle">Vergleich zur üblichen Aktivität</p>
+                    </div>
+                    <span class="trend-badge trend-down">-18 %</span>
+                </div>
+
+                <div class="trend-chart">
+                    <div class="trend-col">
+                        <div class="trend-bar" style="height: 86%;"></div>
+                        <span>Mo</span>
+                    </div>
+                    <div class="trend-col">
+                        <div class="trend-bar" style="height: 84%;"></div>
+                        <span>Di</span>
+                    </div>
+                    <div class="trend-col">
+                        <div class="trend-bar" style="height: 82%;"></div>
+                        <span>Mi</span>
+                    </div>
+                    <div class="trend-col">
+                        <div class="trend-bar" style="height: 75%;"></div>
+                        <span>Do</span>
+                    </div>
+                    <div class="trend-col">
+                        <div class="trend-bar" style="height: 67%;"></div>
+                        <span>Fr</span>
+                    </div>
+                    <div class="trend-col">
+                        <div class="trend-bar" style="height: 58%;"></div>
+                        <span>Sa</span>
+                    </div>
+                    <div class="trend-col current-day">
+                        <div class="trend-bar low" style="height: 46%;"></div>
+                        <span>Heute</span>
+                    </div>
+                </div>
+
+                <p class="trend-footnote">Seit 3 Tagen leicht rückläufige Bewegung.</p>
+            </div>
+        </section>
+
+        <section id="screen-profile" class="screen" data-index="1">
+            <div class="card profile-main">
+                <div class="profile-header">
+                    <div class="profile-avatar-large"></div>
+                    <div>
+                        <h3>Minka</h3>
+                        <p class="subtle">Europäisch Kurzhaar · 6 Jahre</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card info-list-card">
+                <h4>Stammdaten</h4>
+                <div class="info-list">
+                    <div class="info-row"><span>Gewicht</span><strong>5,8 kg</strong></div>
+                    <div class="info-row"><span>Futter</span><strong>Light Trockenfutter + Nassfutter</strong></div>
+                    <div class="info-row"><span>Wohnsituation</span><strong>Freigängerin</strong></div>
+                    <div class="info-row"><span>Besonderheiten</span><strong>Leichtes Übergewicht</strong></div>
+                </div>
+            </div>
+
+            <div class="card info-list-card">
+                <h4>Gesundheitsinformationen</h4>
+                <div class="info-list">
+                    <div class="info-row"><span>Vorerkrankungen</span><strong>Keine bekannt</strong></div>
+                    <div class="info-row"><span>Medikation</span><strong>Keine</strong></div>
+                    <div class="info-row"><span>Tierarztpraxis</span><strong>Praxis am Park</strong></div>
+                    <div class="info-row"><span>Hinweis</span><strong>Gewichtsverlauf beobachten</strong></div>
+                </div>
+            </div>
+
+            <div class="card profile-note">
+                <h4>Für Alltag und Tierarzt</h4>
+                <p>Hier können wichtige Informationen zur Katze schnell eingesehen und bei Bedarf geteilt werden.</p>
+            </div>
+        </section>
+
+        <section id="screen-settings" class="screen" data-index="2">
+            <div class="card device-card enhanced-device-card">
+                <div class="device-topline compact">
+                    <div>
+                        <strong>Status und Akkustand</strong>
+                    </div>
+                </div>
+
+                <div class="device-status-grid">
+                    <div class="device-status-box">
+                        <div class="device-status-icon">📶</div>
+                        <div class="device-status-copy">
+                            <span class="device-status-label">Verbindung</span>
+                            <strong>Stabil</strong>
+                        </div>
+                    </div>
+
+                    <div class="device-status-box battery-box">
+                        <div class="device-status-icon">🔋</div>
+                        <div class="device-status-copy">
+                            <span class="device-status-label">Akku</span>
+                            <strong>84 %</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card settings-section-card">
+                <div class="card-head">
+                    <div>
+                        <h4>Personalisieren</h4>
+                        <p class="subtle">Passe das Signal und Ortung an</p>
+                    </div>
+                </div>
+
+                <div class="settings-list">
+                    <div class="setting-item setting-item-interactive">
+                        <div class="setting-copy">
+                            <span>Warnsignal-Farbe</span>
+                            <small>Farbe des Lichtsignals am Halsband</small>
+                        </div>
+
+                        <div class="setting-control">
+                            <select class="setting-select" aria-label="Warnsignal-Farbe auswählen">
+                                <option selected>Blau</option>
+                                <option>Orange</option>
+                                <option>Rot</option>
+                                <option>Grün</option>
+                                <option>Auto</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-item setting-item-interactive">
+                        <div class="setting-copy">
+                            <span>Automatisch nach Tageslicht</span>
+                            <small>Passt das Signal an helle und dunkle Umgebungen an</small>
+                        </div>
+
+                        <label class="ios-switch" aria-label="Automatisch nach Tageslicht">
+                            <input type="checkbox" checked>
+                            <span class="ios-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-item setting-item-interactive">
+                        <div class="setting-copy">
+                            <span>GPS aktiv</span>
+                            <small>Zeigt Orte und Bewegungen auf der Karte an</small>
+                        </div>
+
+                        <label class="ios-switch" aria-label="GPS aktiv">
+                            <input type="checkbox" checked>
+                            <span class="ios-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-item setting-item-interactive">
+                        <div class="setting-copy">
+                            <span>Strom sparen</span>
+                            <small>Standort wird seltener aktualisiert und der Akku hält länger</small>
+                        </div>
+
+                        <label class="ios-switch" aria-label="Strom sparen">
+                            <input type="checkbox">
+                            <span class="ios-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card lost-mode-card">
+                <div class="card-head">
+                    <div>
+                        <h4>Lost Mode</h4>
+                        <p class="subtle">Hilft dir, Minka präziser wiederzufinden (natürlich auch das Halsband, falls es mal verloren geht 😉)</p>
+                    </div>
+                    <span class="mini-chip warm">Bereit</span>
+                </div>
+
+                <p class="analysis-note">
+                    Im Lost Mode wird GPS häufiger aktualisiert. So wird der Standort präziser angezeigt und Minka kann leichter gefunden werden.
+                </p>
+
+                <div class="lost-mode-grid">
+                    <div class="lost-mode-info">
+                        <span class="lost-mode-label">Aktuelle Distanz</span>
+                        <strong>500 m entfernt</strong>
+                    </div>
+
+                    <div class="lost-mode-info">
+                        <span class="lost-mode-label">Ortung</span>
+                        <strong>Hohe Genauigkeit</strong>
+                    </div>
+                </div>
+
+                <div class="lost-mode-actions">
+                    <button class="primary-btn lost-btn">Lost Mode aktivieren</button>
+                    <button class="secondary-btn lost-btn-secondary">Signal abspielen</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Hauptnavigation">
+        <button id="nav-overview" class="nav-item active" onclick="showScreen('screen-overview', this)" aria-label="Übersicht" data-index="0">
+            <span class="nav-icon">🏠</span>
+        </button>
+
+        <button id="nav-analysis" class="nav-item" onclick="showScreen('screen-activity', this)" aria-label="Analyse" data-index="1">
+            <span class="nav-icon">📊</span>
+        </button>
+
+        <button id="nav-settings" class="nav-item" onclick="showScreen('screen-settings', this)" aria-label="Halsband" data-index="2">
+            <span class="nav-icon">⚙️</span>
+        </button>
+    </nav>
+</div>
+
+</body>
+</html>

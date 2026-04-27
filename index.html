@@ -9,6 +9,64 @@
 </head>
 
 <body>
+
+<div id="onboarding" class="onboarding-overlay ">
+    <div class="onboarding-content">
+        <div class="onboarding-step active" id="step1">
+            <div class="onboarding-image">🐈</div>
+            <h2>Willkommen bei PawGuard</h2>
+            <p>Verstehe die Welt deiner Katze durch smarte KI-Analysen.</p>
+            <div class="onboarding-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+
+        <div class="onboarding-step" id="step2">
+            <div class="onboarding-image">📍</div>
+            <h2>Orte und Verhalten</h2>
+            <p>Sieh, wo deine Katze unterwegs war und welche Verhaltensmuster im Tagesverlauf auffallen.</p>
+            <div class="onboarding-dots">
+                <span class="dot"></span>
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+
+        <div class="onboarding-step" id="step3">
+            <div class="onboarding-image">🐾</div>
+            <h2>Jagdverhalten erkennen</h2>
+            <p>Das Halsband erkennt mögliche Jagdmomente und kann Warnsignale auslösen.</p>
+            <div class="onboarding-dots">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot active"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+
+        <div class="onboarding-step" id="step4">
+            <div class="onboarding-image">🔔</div>
+            <h2>Mehr Überblick im Alltag</h2>
+            <p>Behalte Aktivität, Verhalten und Halsband-Status an einem Ort im Blick.</p>
+            <div class="onboarding-dots">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot active"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="onboarding-footer">
+        <button id="backBtn" class="secondary-btn" onclick="handlePrev()">Zurück</button>
+        <button id="nextBtn" class="primary-btn" onclick="handleNext()">Weiter</button>
+    </div>
+</div>
+
 <div id="tutorial-overlay" class="tutorial-overlay">
     <div class="tutorial-card">
         <button class="close-tutorial" onclick="closeTutorial()" aria-label="Tutorial schließen">✕</button>
@@ -58,7 +116,7 @@
             </div>
 
             <p class="header-subtitle subtle" id="header-subtitle">
-                Orte, Ruhephasen und auffällige Momente auf einen Blick.
+                Alle Orte, Ruhephasen und auffällige Momente auf einen Blick.
             </p>
         </div>
     </header>
@@ -81,13 +139,12 @@
                         <h4>Orte des Tages</h4>
                         <p class="subtle">Letzte Aktivität vor 12 Minuten</p>
                     </div>
-                    <span class="mini-chip">Live</span>
                 </div>
-
+<!--
                 <div class="route-meta">
                     <span class="status-tag active">💤 am Schlafen</span>
                 </div>
-
+-->
                 <div class="map-container route-map" onclick="showScreen('screen-activity', document.getElementById('nav-analysis'))">
                     <div class="map-bg"></div>
 
@@ -99,8 +156,8 @@
                 </div>
 
                 <div class="map-legend">
-                    <span><i class="dot-hunt"></i> Aktives Verhalten</span>
-                    <span><i class="dot-sleep"></i> am Entspannen</span>
+                    <span><i class="dot-hunt"></i>am Jagen</span>
+                    <span><i class="dot-sleep"></i>am Entspannen</span>
                 </div>
 
                 <button class="primary-btn" onclick="showScreen('screen-activity', document.getElementById('nav-analysis'))">
@@ -133,7 +190,7 @@
                 </div>
 
                 <div class="behavior-overview">
-                    <div class="behavior-donut" aria-label="Verteilung von Ruhe, Bewegung und möglichem Jagdverhalten">
+                    <div class="behavior-donut" aria-label="Verteilung von Ruhe, Bewegung und Jagdverhalten">
                         <div class="behavior-donut-inner">
                             <strong>13%</strong>
                             <span>Jagdverhalten</span>
@@ -143,7 +200,7 @@
                     <div class="behavior-legend">
                         <div class="behavior-legend-row">
                             <span class="legend-dot legend-rest"></span>
-                            <span>Ruhe</span>
+                            <span>Ruhen</span>
                             <strong>58%</strong>
                         </div>
                         <div class="behavior-legend-row">
@@ -153,7 +210,7 @@
                         </div>
                         <div class="behavior-legend-row">
                             <span class="legend-dot legend-hunt"></span>
-                            <span>Mögliches Jagdverhalten</span>
+                            <span>Jagdverhalten</span>
                             <strong>13%</strong>
                         </div>
                     </div>
@@ -167,29 +224,27 @@
             <div class="card hunting-card">
                 <div class="card-head">
                     <div>
-                        <h4>Mögliches Jagdverhalten heute</h4>
+                        <h4>Jagdverhalten verhindert</h4>
                         <p class="subtle">Heute 3 erkannte Situationen</p>
                     </div>
-                    <span class="mini-chip warm">Aktiv</span>
                 </div>
 
                 <p class="analysis-note">
-                    Das Halsband hat heute 3 Situationen mit möglichem Jagdverhalten erkannt.
-                    In diesen Momenten wurden Warnsignale aktiviert, um Tiere in der Umgebung
+                    In Momenten wurden Warnsignale aktiviert, um Tiere in der Umgebung
                     frühzeitig zu warnen.
                 </p>
 
                 <div class="hunting-stats">
                     <div class="hunting-stat">
                         <span class="hunting-stat-label">Warnsignale</span>
-                        <strong>3</strong>
+                        <strong>3x</strong>
                     </div>
                     <div class="hunting-stat">
-                        <span class="hunting-stat-label">Auffälligster Bereich</span>
-                        <strong>Hecke</strong>
+                        <span class="hunting-stat-label">Häufige Phasen</span>
+                        <strong>Abends</strong>
                     </div>
                     <div class="hunting-stat">
-                        <span class="hunting-stat-label">Längste Phase</span>
+                        <span class="hunting-stat-label">Längste Dauer</span>
                         <strong>11 Min</strong>
                     </div>
                 </div>
@@ -207,25 +262,22 @@
                     <div class="event-row">
                         <div>
                             <strong>07:40 - 07:48</strong>
-                            <p>Schnelle Beschleunigungen und kurzes Verharren am Beetrand.</p>
+                            <p>Kauern am Beetrand, dann schnelle Beschleunigung.</p>
                         </div>
-                        <span class="event-tag">mittel</span>
                     </div>
 
                     <div class="event-row">
                         <div>
                             <strong>12:18 - 12:24</strong>
-                            <p>Kurze intensive Aktivitätsphase nahe der Hecke.</p>
+                            <p>Langes Kauern mit anschließendem Schleichen nahe der Hecke.</p>
                         </div>
-                        <span class="event-tag">niedrig</span>
                     </div>
 
                     <div class="event-row">
                         <div>
                             <strong>18:52 - 19:03</strong>
-                            <p>Erhöhte Aktivität mit wiederholten Richtungswechseln.</p>
+                            <p>Erst langsames Schleichen mit anschließendem Sprint.</p>
                         </div>
-                        <span class="event-tag">mittel</span>
                     </div>
                 </div>
 
@@ -234,7 +286,7 @@
                 </div>
             </div>
 
-            <div class="card analysis-summary low-activity">
+            <div class="card analysis-summary">
                 <div class="analysis-topline">Aktivität heute</div>
                 <div class="big-number">6.842 <span>Schritte</span></div>
                 <p class="analysis-note">

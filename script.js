@@ -1,6 +1,53 @@
 let currentTutorialStep = 1;
 let currentScreenId = "screen-overview";
 let isTransitioning = false;
+let currentOnboardingStep = 1;
+const totalOnboardingSteps = 4;
+
+function updateOnboardingUI() {
+    const steps = document.querySelectorAll(".onboarding-step");
+    steps.forEach((step) => step.classList.remove("active"));
+
+    const activeStep = document.getElementById(`step${currentOnboardingStep}`);
+    if (activeStep) {
+        activeStep.classList.add("active");
+    }
+
+    const backBtn = document.getElementById("backBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    if (backBtn) {
+        backBtn.disabled = currentOnboardingStep === 1;
+    }
+
+    if (nextBtn) {
+        nextBtn.textContent =
+            currentOnboardingStep === totalOnboardingSteps ? "Los geht's" : "Weiter";
+    }
+}
+
+function handleNext() {
+    if (currentOnboardingStep < totalOnboardingSteps) {
+        currentOnboardingStep += 1;
+        updateOnboardingUI();
+    } else {
+        closeOnboarding();
+    }
+}
+
+function handlePrev() {
+    if (currentOnboardingStep > 1) {
+        currentOnboardingStep -= 1;
+        updateOnboardingUI();
+    }
+}
+
+function closeOnboarding() {
+    const onboarding = document.getElementById("onboarding");
+    if (onboarding) {
+        onboarding.classList.remove("active");
+    }
+}
 
 const headerContent = {
     "screen-overview": {
@@ -192,6 +239,7 @@ function openProfile() {
 
 document.addEventListener("DOMContentLoaded", () => {
     updateTutorialUI();
+    updateOnboardingUI();
     updateHeader(currentScreenId);
 
     const routeMap = document.querySelector(".route-map");

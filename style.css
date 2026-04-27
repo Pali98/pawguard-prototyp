@@ -57,6 +57,99 @@ button {
     width: 100%;
 }
 
+.onboarding-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(247, 249, 252, 0.98);
+    z-index: 100;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 32px 20px 28px;
+}
+
+.onboarding-overlay.active {
+    display: flex;
+}
+
+.onboarding-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.onboarding-step {
+    display: none;
+    text-align: center;
+    max-width: 320px;
+    margin: 0 auto;
+}
+
+.onboarding-step.active {
+    display: block;
+}
+
+.onboarding-image {
+    width: 88px;
+    height: 88px;
+    margin: 0 auto 24px;
+    border-radius: 24px;
+    background: var(--primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+}
+
+.onboarding-step h2 {
+    margin: 0 0 12px;
+    font-size: 28px;
+    line-height: 1.15;
+    color: var(--text-main);
+}
+
+.onboarding-step p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text-sec);
+}
+
+.onboarding-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 28px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #d6dfeb;
+}
+
+.dot.active {
+    background: var(--primary);
+}
+
+.onboarding-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.onboarding-footer .secondary-btn,
+.onboarding-footer .primary-btn {
+    flex: 1;
+}
+
+#backBtn[disabled] {
+    opacity: 0.45;
+    cursor: default;
+}
+
 .greeting {
     font-size: 13px;
     color: var(--text-sec);
@@ -526,11 +619,6 @@ button {
     margin: 12px 0 0;
     color: var(--text-sec);
     line-height: 1.5;
-}
-
-.low-activity {
-    background: linear-gradient(180deg, #fffaf3 0%, #ffffff 100%);
-    border: 1px solid #f6e1be;
 }
 
 .trend-badge {

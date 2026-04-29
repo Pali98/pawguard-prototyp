@@ -3,6 +3,7 @@ let currentScreenId = "screen-overview";
 let isTransitioning = false;
 let currentOnboardingStep = 1;
 const totalOnboardingSteps = 4;
+let previousScreenBeforeProfile = "screen-overview";
 
 function updateOnboardingUI() {
     const steps = document.querySelectorAll(".onboarding-step");
@@ -213,7 +214,17 @@ function showScreen(screenId, navElement = null) {
     }
 }
 
+function toggleProfile() {
+    if (currentScreenId === "screen-profile") {
+        closeProfile();
+    } else {
+        openProfile();
+    }
+}
+
 function openProfile() {
+    previousScreenBeforeProfile = currentScreenId;
+
     const screens = document.querySelectorAll(".screen");
     screens.forEach((screen) => {
         screen.classList.remove("active");
@@ -228,8 +239,49 @@ function openProfile() {
     const navItems = document.querySelectorAll(".nav-item");
     navItems.forEach((item) => item.classList.remove("active"));
 
+    const profileToggle = document.getElementById("profile-toggle");
+    if (profileToggle) {
+        profileToggle.classList.add("profile-is-open");
+        profileToggle.setAttribute("aria-label", "Profil schließen");
+    }
+
     currentScreenId = "screen-profile";
-    updateHeader("screen-profile");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+function closeProfile() {
+    const screens = document.querySelectorAll(".screen");
+    screens.forEach((screen) => {
+        screen.classList.remove("active");
+        clearScreenAnimationClasses(screen);
+    });
+
+    const targetScreen = document.getElementById(previousScreenBeforeProfile || "screen-overview");
+    if (targetScreen) {
+        targetScreen.classList.add("active");
+        currentScreenId = previousScreenBeforeProfile || "screen-overview";
+    }
+
+    const profileToggle = document.getElementById("profile-toggle");
+    if (profileToggle) {
+        profileToggle.classList.remove("profile-is-open");
+        profileToggle.setAttribute("aria-label", "Zum Katzenprofil");
+    }
+
+    const navItems = document.querySelectorAll(".nav-item");
+    navItems.forEach((item) => item.classList.remove("active"));
+
+    const currentScreen = document.getElementById(currentScreenId);
+    const currentIndex = currentScreen ? currentScreen.dataset.index : null;
+
+    const matchingNav = document.querySelector(`.nav-item[data-index="${currentIndex}"]`);
+    if (matchingNav) {
+        matchingNav.classList.add("active");
+    }
 
     window.scrollTo({
         top: 0,
@@ -251,3 +303,44 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+function openActivitySection(sectionId) {
+    showScreen("screen-activity", document.getElementById("nav-analysis"));
+
+    setTimeout(() => {
+        const targetSection = document.getElementById(sectionId);
+
+        if (targetSection) {
+            targetSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+    }, 280);
+}
+
+function openProtectionDetail(type) {
+    const protectionCard = document.querySelector(".protection-card");
+    const details = document.querySelectorAll(".protection-detail");
+
+    details.forEach((detail) => {
+        detail.classList.remove("active");
+    });
+
+    const activeDetail = document.getElementById(`protection-detail-${type}`);
+    if (activeDetail) {
+        activeDetail.classList.add("active");
+    }
+
+    if (protectionCard) {
+        protectionCard.classList.add("flipped");
+    }
+}
+
+function closeProtectionDetail() {
+    const protectionCard = document.querySelector(".protection-card");
+
+    if (protectionCard) {
+        protectionCard.classList.remove("flipped");
+    }
+}

@@ -15,7 +15,7 @@
         <div class="onboarding-step active" id="step1">
             <div class="onboarding-image">🐈</div>
             <h2>Willkommen bei PawGuard</h2>
-            <p>Verstehe die Welt deiner Katze durch smarte KI-Analysen.</p>
+            <p>Mehr Sicherheit für deine Katze, mehr Schutz für Wildtiere</p>
             <div class="onboarding-dots">
                 <span class="dot active"></span>
                 <span class="dot"></span>
@@ -27,7 +27,7 @@
         <div class="onboarding-step" id="step2">
             <div class="onboarding-image">📍</div>
             <h2>Orte und Verhalten</h2>
-            <p>Sieh, wo deine Katze unterwegs war und welche Verhaltensmuster im Tagesverlauf auffallen.</p>
+            <p>Sieh, wo deine Katze unterwegs ist und welche Verhaltensmuster an den Tag gelegt werden.</p>
             <div class="onboarding-dots">
                 <span class="dot"></span>
                 <span class="dot active"></span>
@@ -39,7 +39,7 @@
         <div class="onboarding-step" id="step3">
             <div class="onboarding-image">🐾</div>
             <h2>Jagdverhalten erkennen</h2>
-            <p>Das Halsband erkennt mögliche Jagdmomente und kann Warnsignale auslösen.</p>
+            <p>Das Halsband erkennt mögliche Jagdmomente und löst Warnungen aus, um so dem Wildtier die Flucht zu ermöglichen.</p>
             <div class="onboarding-dots">
                 <span class="dot"></span>
                 <span class="dot"></span>
@@ -109,9 +109,11 @@
             <div class="header-main-row">
                 <h1 id="header-title">Das war Minkas Tag bisher 😊</h1>
                 <button
+                        id="profile-toggle"
                         class="profile-pic profile-button"
-                        onclick="openProfile()"
+                        onclick="toggleProfile()"
                         aria-label="Zum Katzenprofil">
+                    <span class="profile-close-icon">✕</span>
                 </button>
             </div>
 
@@ -122,16 +124,17 @@
     </header>
 
     <main>
-        <section id="screen-overview" class="screen active" data-index="0">
-            <div class="card discovery-banner" onclick="openTutorial()">
+       <section id="screen-overview" class="screen active" data-index="0">
+       <!--     <div class="card discovery-banner" onclick="openTutorial()">
                 <div class="discovery-icon">✨</div>
                 <div class="discovery-content">
                     <div class="discovery-tag">TUTORIAL</div>
                     <h4>Wie funktioniert das Halsband eigentlich?</h4>
-                    <p>Entdecke die Funktionen im Schnell-Guide.</p>
+                    <p>Entdecke die Funktionen von Pawguard.</p>
                 </div>
                 <div class="discovery-arrow">➔</div>
             </div>
+            -->
 
             <div class="card route-card">
                 <div class="card-head">
@@ -140,11 +143,7 @@
                         <p class="subtle">Letzte Aktivität vor 12 Minuten</p>
                     </div>
                 </div>
-<!--
-                <div class="route-meta">
-                    <span class="status-tag active">💤 am Schlafen</span>
-                </div>
--->
+
                 <div class="map-container route-map" onclick="showScreen('screen-activity', document.getElementById('nav-analysis'))">
                     <div class="map-bg"></div>
 
@@ -165,18 +164,100 @@
                 </button>
             </div>
 
-            <div class="card hero-card">
+            <div class="card hero-card clickable-card"
+            onclick="openActivitySection('steps-analysis')">
                 <h3>Heute in Bewegung: 2 h 35 min</h3>
                 <span class="badge warning-badge">Etwas weniger aktiv als üblich</span>
             </div>
 
-            <div
+         <!--   <div
                     class="card insight-card"
                     onclick="showScreen('screen-activity', document.getElementById('nav-analysis'))">
                 <h4>Heutige Highlights</h4>
                 <p>• 6.842 Schritte</p>
                 <p>• 3 mögliche jagdähnliche Phasen</p>
                 <p>• Aktivität 18 % unter dem 7-Tage-Schnitt</p>
+            </div> -->
+            <div class="card protection-card">
+                <div class="protection-flip-inner" id="protection-card-inner">
+                    <div class="protection-side protection-front">
+                        <h4>So schützt PawGuard</h4>
+                        <p class="subtle protection-intro">Für deine Katze und die Umwelt.</p>
+
+                        <div class="protection-button-grid">
+                            <button
+                                    class="protection-choice"
+                                    type="button"
+                                    onclick="openProtectionDetail('safety')">
+                                <span>🛡️</span>
+                                Sicherheit
+                            </button>
+
+                            <button
+                                    class="protection-choice"
+                                    type="button"
+                                    onclick="openProtectionDetail('health')">
+                                <span>💚</span>
+                                Gesundheit
+                            </button>
+
+                            <button
+                                    class="protection-choice"
+                                    type="button"
+                                    onclick="openProtectionDetail('wildlife')">
+                                <span>🐦</span>
+                                Wildtiere
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="protection-side protection-back">
+                        <div class="protection-detail" id="protection-detail-safety">
+                            <div class="protection-detail-icon">🛡️</div>
+                            <h4>Sicherheit für deine Katze</h4>
+                            <p> Diese Funktionen sollen die Sicherheit deiner Katze erhöhen:
+                            </p>
+
+                            <div class="protection-tags">
+                                <span>Standort</span>
+                                <span>Reflektierend</span>
+                                <span>Break-away</span>
+                            </div>
+                        </div>
+
+                        <div class="protection-detail" id="protection-detail-health">
+                            <div class="protection-detail-icon">💚</div>
+                            <h4>Gesundheit im Blick</h4>
+                            <p>
+                                Das Tracking und die Analyse von Daten hilft dir einen Überblick zu behalten:
+                            </p>
+
+                            <div class="protection-tags">
+                                <span>Aktivität</span>
+                                <span>Trends</span>
+                                <span>Erinnerungen</span>
+                            </div>
+                        </div>
+
+                        <div class="protection-detail" id="protection-detail-wildlife">
+                            <div class="protection-detail-icon">🐦</div>
+                            <h4>Mehr Schutz für Wildtiere</h4>
+                            <p>
+                                Über Bewegungsdaten kann Jagdverhalten erkannt und sanft eingegriffen werden:
+                            </p>
+
+                            <div class="protection-tags">
+                                <span>Erkennen</span>
+                                <span>Warnen</span>
+                                <span>Sichtbar machen</span>
+                            </div>
+                        </div>
+
+                        <button class="secondary-btn protection-back-btn" type="button" onclick="closeProtectionDetail()">
+                            Zurück
+                        </button>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -222,71 +303,22 @@
             </div>
 
             <div class="card hunting-card">
-                <div class="card-head">
-                    <div>
-                        <h4>Jagdverhalten verhindert</h4>
-                        <p class="subtle">Heute 3 erkannte Situationen</p>
+                <div class="hunting-circle-wrapper">
+                    <div class="hunting-circle-block">
+                        <h4 class="hunting-circle-title">Erkannte Jagdsituationen</h4>
+
+                        <div class="hunting-circle">
+                            <strong>3</strong>
+                        </div>
                     </div>
                 </div>
 
-                <p class="analysis-note">
-                    In Momenten wurden Warnsignale aktiviert, um Tiere in der Umgebung
-                    frühzeitig zu warnen.
+                <p class="analysis-note hunting-warning-note">
+                    In diesen Momenten wurden Signale ausgegeben, um Tiere in der Umgebung frühzeitig zu warnen.
                 </p>
-
-                <div class="hunting-stats">
-                    <div class="hunting-stat">
-                        <span class="hunting-stat-label">Warnsignale</span>
-                        <strong>3x</strong>
-                    </div>
-                    <div class="hunting-stat">
-                        <span class="hunting-stat-label">Häufige Phasen</span>
-                        <strong>Abends</strong>
-                    </div>
-                    <div class="hunting-stat">
-                        <span class="hunting-stat-label">Längste Dauer</span>
-                        <strong>11 Min</strong>
-                    </div>
-                </div>
             </div>
 
-            <div class="card detail-card">
-                <div class="card-head">
-                    <div>
-                        <h4>Erkannte Situationen im Detail</h4>
-                        <p class="subtle">Zeitfenster, Muster und Einschätzung</p>
-                    </div>
-                </div>
-
-                <div class="hunting-events">
-                    <div class="event-row">
-                        <div>
-                            <strong>07:40 - 07:48</strong>
-                            <p>Kauern am Beetrand, dann schnelle Beschleunigung.</p>
-                        </div>
-                    </div>
-
-                    <div class="event-row">
-                        <div>
-                            <strong>12:18 - 12:24</strong>
-                            <p>Langes Kauern mit anschließendem Schleichen nahe der Hecke.</p>
-                        </div>
-                    </div>
-
-                    <div class="event-row">
-                        <div>
-                            <strong>18:52 - 19:03</strong>
-                            <p>Erst langsames Schleichen mit anschließendem Sprint.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="hint-box">
-                    Die Darstellung soll Bewegungsmuster nachvollziehbar machen, nicht Verhalten sicher bewerten.
-                </div>
-            </div>
-
-            <div class="card analysis-summary">
+            <div class="card analysis-summary" id="steps-analysis">
                 <div class="analysis-topline">Aktivität heute</div>
                 <div class="big-number">6.842 <span>Schritte</span></div>
                 <p class="analysis-note">
@@ -339,39 +371,117 @@
         </section>
 
         <section id="screen-profile" class="screen" data-index="1">
-            <div class="card profile-main">
-                <div class="profile-header">
+            <div class="card profile-main profile-overview-card">
+                <div class="profile-header compact-profile-header">
                     <div class="profile-avatar-large"></div>
-                    <div>
+
+                    <div class="profile-title-copy">
                         <h3>Minka</h3>
                         <p class="subtle">Europäisch Kurzhaar · 6 Jahre</p>
+                    </div>
+                </div>
+
+                <div class="info-list compact-profile-list">
+                    <div class="info-row">
+                        <span>Fellfarbe</span>
+                        <strong>getigert</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Augenfarbe</span>
+                        <strong>grün</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Gewicht</span>
+                        <strong>5,8 kg</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Wohnsituation</span>
+                        <strong>Freigängerin</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Chipstatus</span>
+                        <strong>Gechippt</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Chipnummer</span>
+                        <strong>276098102938475</strong>
+                    </div>
+
+                    <div class="info-row profile-address-row">
+                        <span>Zuhause</span>
+                        <strong>Musterstraße 12, 97074 Würzburg</strong>
                     </div>
                 </div>
             </div>
 
             <div class="card info-list-card">
-                <h4>Stammdaten</h4>
+                <h4>Gesundheit & Alltag</h4>
+
                 <div class="info-list">
-                    <div class="info-row"><span>Gewicht</span><strong>5,8 kg</strong></div>
-                    <div class="info-row"><span>Futter</span><strong>Light Trockenfutter + Nassfutter</strong></div>
-                    <div class="info-row"><span>Wohnsituation</span><strong>Freigängerin</strong></div>
-                    <div class="info-row"><span>Besonderheiten</span><strong>Leichtes Übergewicht</strong></div>
+                    <div class="info-row">
+                        <span>Krankheiten</span>
+                        <strong>Keine</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Medikation</span>
+                        <strong>Keine</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Letzte Impfung</span>
+                        <strong>03.02.2026</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Letzte Wurmkur</span>
+                        <strong>12.03.2026</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Futtermittel</span>
+                        <strong>Light Trockenfutter + Nassfutter</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Besonderheiten</span>
+                        <strong>Leichtes Übergewicht</strong>
+                    </div>
+                </div>
+
+                <div class="hint-box profile-health-hint">
+                    Der Gewichtsverlauf sollte weiter beobachtet werden.
                 </div>
             </div>
 
-            <div class="card info-list-card">
-                <h4>Gesundheitsinformationen</h4>
-                <div class="info-list">
-                    <div class="info-row"><span>Vorerkrankungen</span><strong>Keine bekannt</strong></div>
-                    <div class="info-row"><span>Medikation</span><strong>Keine</strong></div>
-                    <div class="info-row"><span>Tierarztpraxis</span><strong>Praxis am Park</strong></div>
-                    <div class="info-row"><span>Hinweis</span><strong>Gewichtsverlauf beobachten</strong></div>
+            <div class="card vet-card">
+                <div class="card-head">
+                    <div>
+                        <h4>Tierarztpraxis</h4>
+                        <p class="subtle">Wichtige Kontaktdaten und Erinnerungen</p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="card profile-note">
-                <h4>Für Alltag und Tierarzt</h4>
-                <p>Hier können wichtige Informationen zur Katze schnell eingesehen und bei Bedarf geteilt werden.</p>
+                <div class="vet-practice-box">
+                    <strong>Praxis am Park</strong>
+                    <p>Parkstraße 8, 97070 Würzburg</p>
+                </div>
+
+                <div class="info-list vet-info-list">
+                    <div class="info-row">
+                        <span>Nächster Check-Up</span>
+                        <strong>14.01.2027</strong>
+                    </div>
+
+                <button class="primary-btn vet-contact-btn">
+                    Tierarzt kontaktieren
+                </button>
+            </div>
             </div>
         </section>
 

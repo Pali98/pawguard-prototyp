@@ -10,7 +10,7 @@
 
 <body>
 
-<div id="onboarding" class="onboarding-overlay active">
+<div id="onboarding" class="onboarding-overlay ">
     <div class="onboarding-content">
         <div class="onboarding-step active" id="step1">
             <div class="onboarding-image">🐈</div>
@@ -125,7 +125,7 @@
 
     <main>
        <section id="screen-overview" class="screen active" data-index="0">
-       <!--     <div class="card discovery-banner" onclick="openTutorial()">
+             <div class="card discovery-banner" onclick="openTutorial()">
                 <div class="discovery-icon">✨</div>
                 <div class="discovery-content">
                     <div class="discovery-tag">TUTORIAL</div>
@@ -134,7 +134,7 @@
                 </div>
                 <div class="discovery-arrow">➔</div>
             </div>
-            -->
+
 
             <div class="card route-card">
                 <div class="card-head">
@@ -170,15 +170,27 @@
                 <span class="badge warning-badge">Etwas weniger aktiv als üblich</span>
             </div>
 
-         <!--   <div
-                    class="card insight-card"
-                    onclick="showScreen('screen-activity', document.getElementById('nav-analysis'))">
-                <h4>Heutige Highlights</h4>
-                <p>• 6.842 Schritte</p>
-                <p>• 3 mögliche jagdähnliche Phasen</p>
-                <p>• Aktivität 18 % unter dem 7-Tage-Schnitt</p>
-            </div> -->
-            <div class="card protection-card">
+           <div
+                   class="card insight-card hunting-overview-card clickable-card"
+                   onclick="openActivitySection('hunting-insights')">
+               <div class="hunting-overview-head">
+                   <h4>Minkas Jagdverhalten heute</h4>
+               </div>
+
+               <div class="hunting-overview-main">
+                   <div class="hunting-overview-number">3</div>
+                   <div>
+                       <strong>erkannte Jagdsituationen</strong>
+                       <p>Warnsignale wurden ausgegeben.</p>
+                   </div>
+               </div>
+
+               <button class="hunting-overview-button" type="button">
+                   Details ansehen
+               </button>
+           </div>
+
+           <!-- <div class="card protection-card">
                 <div class="protection-flip-inner" id="protection-card-inner">
                     <div class="protection-side protection-front">
                         <h4>So schützt PawGuard</h4>
@@ -258,7 +270,8 @@
                         </button>
                     </div>
                 </div>
-            </div>
+            </div>-->
+
         </section>
 
         <section id="screen-activity" class="screen" data-index="1">
@@ -302,21 +315,120 @@
                 </p>
             </div>
 
-            <div class="card hunting-card">
-                <div class="hunting-circle-wrapper">
-                    <div class="hunting-circle-block">
-                        <h4 class="hunting-circle-title">Erkannte Jagdsituationen</h4>
+            <div class="card hunting-detail-card" id="hunting-insights">
+                <div class="card-head">
+                    <div>
+                        <h4>Jagdverhalten heute</h4>
+                        <p class="subtle">Erkannte Jagdsituationen im Tagesverlauf</p>
+                    </div>
 
-                        <div class="hunting-circle">
-                            <strong>3</strong>
-                        </div>
+                    <button
+                            class="hunting-detail-toggle-button"
+                            id="hunting-detail-toggle"
+                            type="button"
+                            onclick="toggleHuntingDetails()"
+                            aria-expanded="false"
+                            aria-label="Details anzeigen">
+                        +
+                    </button>
+                </div>
+
+                <div class="hunting-summary-row">
+                    <div class="hunting-summary-number">3</div>
+
+                    <div class="hunting-summary-copy">
+                        <strong>erkannte Jagdsituationen</strong>
+                        <p>Heute besonders auffällig: Morgen und Abend.</p>
                     </div>
                 </div>
 
-                <p class="analysis-note hunting-warning-note">
-                    In diesen Momenten wurden Signale ausgegeben, um Tiere in der Umgebung frühzeitig zu warnen.
-                </p>
+                <div class="hunting-detail-content" id="hunting-detail-content">
+                    <div class="hunting-time-list">
+                        <div class="hunting-time-row">
+                            <div class="hunting-time-label">
+                                <span class="hunting-time-icon">🌅</span>
+                                <div>
+                                    <strong>Morgen</strong>
+                                    <p>07:40 – 07:48</p>
+                                </div>
+                            </div>
+                            <span class="hunting-level medium">mittel</span>
+                        </div>
+
+                        <div class="hunting-time-row">
+                            <div class="hunting-time-label">
+                                <span class="hunting-time-icon">☀️</span>
+                                <div>
+                                    <strong>Mittag</strong>
+                                    <p>12:18 – 12:24</p>
+                                </div>
+                            </div>
+                            <span class="hunting-level low">niedrig</span>
+                        </div>
+
+                        <div class="hunting-time-row">
+                            <div class="hunting-time-label">
+                                <span class="hunting-time-icon">🌙</span>
+                                <div>
+                                    <strong>Abend</strong>
+                                    <p>18:52 – 19:03</p>
+                                </div>
+                            </div>
+                            <span class="hunting-level medium">mittel</span>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <div class="card season-note-card">
+                <div class="season-note-icon">🌱</div>
+
+                <div>
+                    <h4>Saison-Hinweis</h4>
+                    <p>
+                        Frühling: Brut- und Jungtierzeit. Plane Freigang in der Dämmerung besonders bewusst.
+                    </p>
+                </div>
+            </div>
+
+           <!-- <div class="card hunting-tips-card">
+                <div class="tips-toggle-head" onclick="toggleHuntingTips()">
+                    <div>
+                        <h4>Jagdverhalten reduzieren</h4>
+                        <p class="subtle">Was du im Alltag ausprobieren kannst</p>
+                    </div>
+
+                    <button class="tips-toggle-button text-toggle" id="hunting-tips-toggle" type="button" aria-label="Tipps anzeigen">
+                        Mehr Tipps
+                    </button>
+                </div>
+
+                <div class="hunting-tips-content" id="hunting-tips-content">
+                    <div class="tip-item">
+                        <div class="tip-icon">⏰</div>
+                        <div>
+                            <strong>Freigang später planen</strong>
+                            <p>Morgens und abends sind viele Wildtiere besonders aktiv. Teste Freigang eher am späten Vormittag.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip-item">
+                        <div class="tip-icon">🧶</div>
+                        <div>
+                            <strong>Vor dem Rauslassen spielen</strong>
+                            <p>Eine kurze Spielrunde kann helfen, Jagdenergie umzulenken, bevor Minka nach draußen geht.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip-item">
+                        <div class="tip-icon">🥣</div>
+                        <div>
+                            <strong>Futter & Sättigung prüfen</strong>
+                            <p>Sättigendes, proteinreiches Futter kann helfen. Bei Unsicherheit mit der Tierarztpraxis absprechen.</p>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
 
             <div class="card analysis-summary" id="steps-analysis">
                 <div class="analysis-topline">Aktivität heute</div>

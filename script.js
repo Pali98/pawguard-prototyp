@@ -344,3 +344,42 @@ function closeProtectionDetail() {
         protectionCard.classList.remove("flipped");
     }
 }
+
+function toggleHuntingTips() {
+    const tipsCard = document.querySelector(".hunting-tips-card");
+    const toggleButton = document.getElementById("hunting-tips-toggle");
+
+    if (!tipsCard) return;
+
+    tipsCard.classList.toggle("open");
+
+    const isOpen = tipsCard.classList.contains("open");
+
+    if (toggleButton) {
+        toggleButton.textContent = isOpen ? "Weniger Tipps" : "Mehr Tipps";
+        toggleButton.setAttribute(
+            "aria-label",
+            isOpen ? "Tipps ausblenden" : "Tipps anzeigen"
+        );
+    }
+}
+
+function toggleHuntingDetails() {
+    const detailCard = document.getElementById("hunting-insights");
+    const detailButton = document.getElementById("hunting-detail-toggle");
+
+    if (!detailCard) return;
+
+    detailCard.classList.toggle("open");
+
+    const isOpen = detailCard.classList.contains("open");
+
+    if (detailButton) {
+        detailButton.textContent = isOpen ? "−" : "+";
+        detailButton.setAttribute(
+            "aria-label",
+            isOpen ? "Details ausblenden" : "Details anzeigen"
+        );
+        detailButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    }
+}
